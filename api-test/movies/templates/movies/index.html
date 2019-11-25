@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>index</h1>
+  <hr>
+  <h3>genre</h3>
+  {% for genre in gemres %}
+    <h5>{{genre.name}}</h5>
+  {% endfor %}
+  <hr>
+  <h3>director</h3>
+  {% for director in directors %}
+    <h5>{{director.name}}</h5>
+  {% endfor %}
+  <hr>
+  <h3>grade</h3>
+  {% for grade in grades %}
+    <h5>{{grade.name}}</h5>
+  {% endfor %}
+  <hr>
+  <h3>movie</h3>
+  {% for movie in movies %}
+    <h5>{{movie.name}}</h5>
+  {% endfor %}
+{% end block %}
