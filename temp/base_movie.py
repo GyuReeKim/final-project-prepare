@@ -28,8 +28,8 @@ movieNmEn_list = []
 directors_list = []
 watchGradeNm_list = []
 # for i in range(60):
-for i in range(5):
-    targetDt = (today + timedelta(days=-(i+7))).strftime('%Y%m%d')
+for i in range(20):
+    targetDt = (today + timedelta(days=-(i+21))).strftime('%Y%m%d')
     # print(targetDt)
     daily_movie_url = f'{daily_url}?key={key}&targetDt={targetDt}'
 
@@ -69,11 +69,11 @@ for i in range(5):
                 else:
                     watchGradeNm_list.append(6)
     # print(watchGradeNm_list)
-print(len(movieNm_list))
-print(audiAcc_list)
-print(movieNmEn_list)
-print(directors_list)
-print(len(watchGradeNm_list))
+print(movieNm_list)
+# print(audiAcc_list)
+# print(movieNmEn_list)
+# print(directors_list)
+# print(len(watchGradeNm_list))
 
 #애플리케이션 클라이언트 id 및 secret
 ### id, secret값 따로 저장 필요 ###
@@ -107,6 +107,7 @@ for i in range(len_movie):
         response_body = response.read()
         str_info = response_body.decode('utf-8')
         dict_info = json.loads(str_info)
+        print(movieNm_list[i], dict_info.get('items'))
 
         if dict_info.get('items') != []:
             cnt_id += 1
@@ -125,8 +126,13 @@ for i in range(len_movie):
                 if temp_link[t] == "=":
                     naver_movie_code = temp_link[t+1:]
                     break
-            poster_url = poster_image_url + naver_movie_code
-            # print(poster_url)
+            temp_poster_url = poster_image_url + naver_movie_code
+            # print(temp_poster_url)
+
+            poster_response = requests.get(temp_poster_url).text
+            poster_soup = BeautifulSoup(poster_response, 'html.parser')
+            posters = poster_soup.select('#page_content > a')
+            poster_url = posters[0].find_all('img')[0].get('src')
 
             # soup
             response = requests.get(movie_link).text
@@ -189,7 +195,7 @@ for i in range(len_movie):
 
     data[i] = movie_data
     # print()
-print(data)
+# print(data)
 
 with open('fixtures/movie.json', 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False)

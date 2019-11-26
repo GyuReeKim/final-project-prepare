@@ -13,7 +13,7 @@ daily_url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searc
 detail_url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json'
 
 ### key값 따로 저장 필요 ###
-key = '660f73acbf0225280f5db341b9f4e840'
+key = '89463563279eb5bce6f2e9655a090259'
 
 # director.json 불러오기
 with open('fixtures/director.json', 'r', encoding='utf-8') as f:
@@ -32,14 +32,14 @@ for i in range(60):
     targetDt = (today + timedelta(days=-(i+2))).strftime('%Y%m%d')
     # print(targetDt)
     daily_movie_url = f'{daily_url}?key={key}&targetDt={targetDt}'
-
+    print(daily_movie_url)
     res = requests.get(daily_movie_url).json()
 
     for k in range(10):
         movieCd = res.get('boxOfficeResult').get('dailyBoxOfficeList')[k].get('movieCd')
         movieNm = res.get('boxOfficeResult').get('dailyBoxOfficeList')[k].get('movieNm')
         audiAcc = res.get('boxOfficeResult').get('dailyBoxOfficeList')[k].get('audiAcc')
-        if movieNm not in movieNm_list:
+        if movieNm not in movieNm_list and '3D' not in movieNm:
             movieNm_list.append(movieNm)
             audiAcc_list.append(int(audiAcc))
             
@@ -125,8 +125,14 @@ for i in range(len_movie):
                 if temp_link[t] == "=":
                     naver_movie_code = temp_link[t+1:]
                     break
-            poster_url = poster_image_url + naver_movie_code
-            # print(poster_url)
+            temp_poster_url = poster_image_url + naver_movie_code
+            # print(temp_poster_url)
+
+            poster_response = requests.get(temp_poster_url).text
+            poster_soup = BeautifulSoup(poster_response, 'html.parser')
+            posters = poster_soup.select('#page_content > a')
+            poster_url = posters[0].find_all('img')[0].get('src')
+            print(poster_url)
 
             # soup
             response = requests.get(movie_link).text

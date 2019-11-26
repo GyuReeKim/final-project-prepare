@@ -150,8 +150,13 @@ for i in range(len_new_movie):
                 if temp_link[t] == "=":
                     naver_movie_code = temp_link[t+1:]
                     break
-            poster_url = poster_image_url + naver_movie_code
-            # print(poster_url)
+            temp_poster_url = poster_image_url + naver_movie_code
+            # print(temp_poster_url)
+
+            poster_response = requests.get(temp_poster_url).text
+            poster_soup = BeautifulSoup(poster_response, 'html.parser')
+            posters = poster_soup.select('#page_content > a')
+            poster_url = posters[0].find_all('img')[0].get('src')
 
             # soup
             response = requests.get(movie_link).text
