@@ -12,14 +12,13 @@ detail_url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMo
 
 # key값 따로 저장 필요
 key = '660f73acbf0225280f5db341b9f4e840'
-weekGb = '0'
 
 directors_list = []
 for i in range(60):
 # for i in range(5):
     targetDt = (today + timedelta(days=-(i+2))).strftime('%Y%m%d')
     # print(targetDt)
-    daily_movie_url = f'{daily_url}?key={key}&targetDt={targetDt}&weekGb={weekGb}'
+    daily_movie_url = f'{daily_url}?key={key}&targetDt={targetDt}'
 
     res = requests.get(daily_movie_url).json()
 
