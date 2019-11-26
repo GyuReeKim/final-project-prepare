@@ -15,13 +15,13 @@ detail_url = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMo
 key = '660f73acbf0225280f5db341b9f4e840'
 
 # movie.json 불러오기
-with open('movie.json', 'r', encoding='utf-8') as f:
+with open('fixtures/movie.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 # print(data)
 len_data = len(data)
 
 # director.json 불러오기
-with open('director.json', 'r', encoding='utf-8') as f:
+with open('fixtures/director.json', 'r', encoding='utf-8') as f:
     director_data = json.load(f)
 # print(director_data)
 
@@ -214,5 +214,5 @@ for i in range(len_new_movie):
     data.append(new_movie_data)
 print(data)
 
-with open('movie.json', 'w', encoding='utf-8') as f:
+with open('fixtures/movie.json', 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False)

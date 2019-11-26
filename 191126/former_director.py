@@ -56,5 +56,5 @@ for dl in range(len(directors_list)):
             directors_dict_list.append(each_directors_dict)
 print(directors_dict_list)
 
-with open('director.json', 'w', encoding='utf-8') as f:
+with open('fixtures/director.json', 'w', encoding='utf-8') as f:
     json.dump(directors_dict_list, f, ensure_ascii=False)

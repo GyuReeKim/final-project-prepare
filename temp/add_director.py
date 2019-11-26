@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import requests
 import json
 
-with open('director.json', 'r', encoding='utf-8') as f:
+with open('fixtures/director.json', 'r', encoding='utf-8') as f:
     director_data = json.load(f)
 print(director_data)
 len_director_data = len(director_data)
@@ -47,5 +47,5 @@ for k in range(10):
 print(director_data)
 
 # 추가된 director 저장
-with open('director.json', 'w', encoding='utf-8') as f:
+with open('fixtures/director.json', 'w', encoding='utf-8') as f:
     json.dump(director_data, f, ensure_ascii=False)
